@@ -5,12 +5,12 @@ on:
     branches:
       - main
       - feature
+
   pull_request:
     branches:
       - main
 
 jobs:
-
   terraform:
     name: Terraform
     runs-on: ubuntu-latest
@@ -27,21 +27,26 @@ jobs:
 
       # 3. Terraform Format Check
       - name: Terraform Format
+        working-directory: ./rg
         run: terraform fmt -check
 
       # 4. Terraform Init
       - name: Terraform Init
+        working-directory: ./rg
         run: terraform init
 
       # 5. Terraform Validate
       - name: Terraform Validate
+        working-directory: ./rg
         run: terraform validate
 
       # 6. Terraform Plan
       - name: Terraform Plan
+        working-directory: ./rg
         run: terraform plan -var-file="terraform.tfvars"
 
       # 7. Terraform Apply only on main branch
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        working-directory: ./rg
         run: terraform apply -auto-approve -var-file="terraform.tfvars"
