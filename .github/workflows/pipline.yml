@@ -40,4 +40,9 @@ jobs:
         working-directory: ./rg
         run: terraform validate
 
-    
+      # 6. Terraform Plan
+      - name: Terraform Plan
+        working-directory: ./rg
+        run: terraform plan -var-file="terraform.tfvars"
+
+      
